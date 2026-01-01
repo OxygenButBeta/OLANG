@@ -9,7 +9,8 @@ public static class MethodTest {
         EvaluationEnvironment env = new();
 
         env.Assign("print", new Action<object>((val) => Console.WriteLine($"> OUT (Extern Call): {val}")));
-        env.Assign("max", new Func<int, int, int>((a, b) => Math.Max(a, b)));
+        
+        env.Assign("max", new Func<int, int, int>(Math.Max));
 
         string[] script = {
             "a = 15",
@@ -21,12 +22,11 @@ public static class MethodTest {
             List<Token> tokens = Scan(line);
             ExpressionNode tree = new Parser(tokens.ToArray()).Parse();
             var result = new Evaluator(tree, env).Evaluate();
-
             Console.WriteLine($"Executed: {line} | Result: {result}");
         }
     }
 
-    private static List<Token> Scan(string input) {
+    static List<Token> Scan(string input) {
         Lexer lexer = new(input);
         var tokens = new List<Token>();
         while (true) {

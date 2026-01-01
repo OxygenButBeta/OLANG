@@ -20,7 +20,7 @@ public static class DiagnosticTest
             }
 
             Parser parser = new(tokens.ToArray());
-            ExpressionNode tree = parser.Parse();
+            parser.Parse();
 
             List<Diagnostic> diagnostics = lexer.Diagnostics.Concat(parser.Diagnostics).ToList();
             if (diagnostics.Any())

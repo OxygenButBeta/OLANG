@@ -11,8 +11,7 @@ internal class Program {
             Console.WriteLine("========================================");
 
 
-          //  SequentialMemoryTest.Begin();
-            MethodTest.Begin();
+            EngineLogicTest.Begin();
 
 
             Console.WriteLine("\n-------------------------");

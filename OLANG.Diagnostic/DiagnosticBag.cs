@@ -1,10 +1,8 @@
 ﻿namespace OLANG.Core;
 
-public record Diagnostic(string Message, int Position);
-
 public class DiagnosticBag : IEnumerable<Diagnostic>
 {
-    private readonly List<Diagnostic> _diagnostics = new();
+    readonly List<Diagnostic> _diagnostics = new();
 
     public void Report(string message, int position) => _diagnostics.Add(new Diagnostic(message, position));
     

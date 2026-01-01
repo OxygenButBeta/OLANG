@@ -1,6 +1,6 @@
 ﻿namespace OLANG.Core;
 
-public enum TokenType
+public enum TokenType : byte
 {
     Plus, Minus, Star, Slash, 
     OpenParen, CloseParen,
@@ -9,11 +9,18 @@ public enum TokenType
     Identifier, 
     Number,    
     String,    
+    Bang,
+    BangEquals,
+    EqualsEquals,
+    Less,
+    LessOrEquals,
+    Greater,
+    GreaterOrEquals,
 
-   
     Var, If, Else, True, False, Print,
 
     
     EOF,        
-    BadToken    
+    BadToken,
+    Comma
 }
