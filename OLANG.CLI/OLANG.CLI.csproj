@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OLANG.Core\OLANG.Core.csproj" />
+      <ProjectReference Include="..\OLANG.Runtime\OLANG.Runtime.csproj" />
+      <ProjectReference Include="..\OLANG.Syntax\OLANG.Syntax.csproj" />
+    </ItemGroup>
+
+</Project>
