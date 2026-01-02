@@ -14,12 +14,13 @@ public class Lexer {
     public DiagnosticBag Diagnostics { get; } = new();
     char Current => position >= raw.Length ? '\0' : raw[position];
     char Peek(int offset) => (position + offset >= raw.Length) ? '\0' : raw[position + offset];
-    bool IsAlpha(char c) => char.IsLetter(c) || c == '_';
-    bool IsAlphaNumeric(char c) => char.IsLetterOrDigit(c) || c == '_';
+    static bool IsAlpha(char c) => char.IsLetter(c) || c == '_';
+    static bool IsAlphaNumeric(char c) => char.IsLetterOrDigit(c) || c == '_';
 
     public Token NextToken() {
         if (position >= raw.Length)
             return new Token(TokenType.EOF, "\0", null, position);
+
         if (IsAlpha(Current)) {
             var start = position;
             while (IsAlphaNumeric(Current)) position++;
@@ -56,36 +57,21 @@ public class Lexer {
 
         switch (Current) {
             case '!':
-                if (Peek(1) == '=') {
-                    position += 2;
-                    return new Token(TokenType.BangEquals, "!=", null, position - 2);
-                }
-
-                return new Token(TokenType.Bang, "!", null, position++);
-
+                if (Peek(1) != '=') return new Token(TokenType.Bang, "!", null, position++);
+                position += 2;
+                return new Token(TokenType.BangEquals, "!=", null, position - 2);
             case '=':
-                if (Peek(1) == '=') {
-                    position += 2;
-                    return new Token(TokenType.EqualsEquals, "==", null, position - 2);
-                }
-
-                return new Token(TokenType.Equals, "=", null, position++);
-
+                if (Peek(1) != '=') return new Token(TokenType.Equals, "=", null, position++);
+                position += 2;
+                return new Token(TokenType.EqualsEquals, "==", null, position - 2);
             case '<':
-                if (Peek(1) == '=') {
-                    position += 2;
-                    return new Token(TokenType.LessOrEquals, "<=", null, position - 2);
-                }
-
-                return new Token(TokenType.Less, "<", null, position++);
-
+                if (Peek(1) != '=') return new Token(TokenType.Less, "<", null, position++);
+                position += 2;
+                return new Token(TokenType.LessOrEquals, "<=", null, position - 2);
             case '>':
-                if (Peek(1) == '=') {
-                    position += 2;
-                    return new Token(TokenType.GreaterOrEquals, ">=", null, position - 2);
-                }
-
-                return new Token(TokenType.Greater, ">", null, position++);
+                if (Peek(1) != '=') return new Token(TokenType.Greater, ">", null, position++);
+                position += 2;
+                return new Token(TokenType.GreaterOrEquals, ">=", null, position - 2);
             case '+':
                 return new Token(TokenType.Plus, "+", null, position++);
             case '-':
@@ -98,7 +84,6 @@ public class Lexer {
                 return new Token(TokenType.OpenParen, "(", null, position++);
             case ')':
                 return new Token(TokenType.CloseParen, ")", null, position++);
-
             case ',':
                 return new Token(TokenType.Comma, ",", null, position++);
             default:

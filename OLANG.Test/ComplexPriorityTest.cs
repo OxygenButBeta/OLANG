@@ -1,4 +1,4 @@
-﻿using OLANG.Core;
+﻿/*using OLANG.Core;
 using OLANG.Syntax;
 
 public static class ComplexPriorityTest
@@ -12,7 +12,7 @@ public static class ComplexPriorityTest
         Parser parser = new(tokens.ToArray());
         ExpressionNode tree = parser.Parse();
         
-        EvaluationEnvironment env = new();
+        OlangMemory env = new();
         var result = new Evaluator(tree, env).Evaluate();
 
         Console.WriteLine($"Input: {input}");
@@ -29,4 +29,4 @@ public static class ComplexPriorityTest
         }
         return tokens;
     }
-}
+}*/

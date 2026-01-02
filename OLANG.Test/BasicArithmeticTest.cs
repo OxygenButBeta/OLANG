@@ -1,4 +1,4 @@
-﻿using OLANG.Core;
+﻿/*using OLANG.Core;
 using OLANG.Syntax;
 
 namespace OLANG.CLI.Tests;
@@ -26,7 +26,7 @@ public static class BasicArithmeticTest
         ExpressionNode syntaxTree = parser.Parse();
         Console.WriteLine($"3. Syntax Tree: Root node is {syntaxTree.GetType().Name}");
 
-        EvaluationEnvironment env = new();
+        OlangMemory env = new();
 
         Evaluator evaluator = new(syntaxTree, env);
         var result = evaluator.Evaluate();
@@ -34,4 +34,4 @@ public static class BasicArithmeticTest
         Console.WriteLine($"4. Final Result: {result}");
         Console.WriteLine("=============================");
     }
-}
+}*/

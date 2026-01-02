@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using OLANG.Core;
+﻿using OLANG.Core;
 
 namespace OLANG.Syntax;
 
@@ -42,7 +41,16 @@ public class Parser {
     public ExpressionNode Parse() {
         return ParseExpression(0);
     }
+    public List<ExpressionNode> ParseCompilationUnit() {
+        var statements = new List<ExpressionNode>();
 
+        while (Current.Type != TokenType.EOF) {
+            ExpressionNode expression = ParseExpression();
+            statements.Add(expression);
+        }
+
+        return statements;
+    }
     static int GetBinaryOperatorPrecedence(TokenType type) {
         return type switch {
             TokenType.Star or TokenType.Slash => 2,
@@ -50,7 +58,8 @@ public class Parser {
             _ => 0
         };
     }
-    public ExpressionNode ParseExpression(int parentPrecedence = 0) {
+
+    ExpressionNode ParseExpression(int parentPrecedence = 0) {
         if (Peek(0).Type == TokenType.Identifier && Peek(1).Type == TokenType.Equals) {
             Token identifierToken = NextToken();
             Token operatorToken = NextToken();
@@ -109,67 +118,5 @@ public class Parser {
 
         Token numberToken = Match(TokenType.Number);
         return new LiteralExpressionNode(numberToken, numberToken.Value!);
-    }
-}
-
-public class Evaluator {
-    readonly ExpressionNode root;
-    readonly EvaluationEnvironment env = new();
-
-    public Evaluator(ExpressionNode root, EvaluationEnvironment environment) {
-        env = environment;
-        this.root = root;
-    }
-
-    public object Evaluate() {
-        return EvaluateExpression(root);
-    }
-
-    object? EvaluateExpression(ExpressionNode node) {
-        if (node is LiteralExpressionNode n)
-            return n.Value;
-
-        if (node is NameExpressionNode name)
-            return env.Get(name.IdentifierToken.Text);
-
-        if (node is AssignmentExpressionNode assignment) {
-            var value = EvaluateExpression(assignment.Expression);
-            env.Assign(assignment.IdentifierToken.Text, value);
-            return value;
-        }
-        
-        if (node is CallExpressionNode call) {
-            var funcName = call.IdentifierToken.Text;
-            var func = env.Get(funcName);
-
-            if (func is Delegate nativeMethod) {
-                var args = call.Arguments.Select(EvaluateExpression).ToArray();
-
-                ParameterInfo[] methodParams = nativeMethod.Method.GetParameters();
-                if (methodParams.Length != args.Length) {
-                    throw new Exception($"Function '{funcName}' expects {methodParams.Length} arguments, but got {args.Length}.");
-                }
-
-                return nativeMethod.DynamicInvoke(args);
-            }
-        }
-        
-        if (node is BinaryExpressionNode b) {
-            var left = EvaluateExpression(b.Left);
-            var right = EvaluateExpression(b.Right);
-
-            double l = Convert.ToDouble(left);
-            double r = Convert.ToDouble(right);
-
-            return b.OperatorToken.Type switch {
-                TokenType.Plus => l + r,
-                TokenType.Minus => l - r,
-                TokenType.Star => l * r,
-                TokenType.Slash => r == 0 ? throw new Exception("Division by zero") : l / r,
-                _ => throw new Exception($"Unexpected operator {b.OperatorToken.Type}")
-            };
-        }
-
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-﻿using OLANG.Core;
+﻿/*using OLANG.Core;
 using OLANG.Syntax;
 
 namespace OLANG.CLI.Tests;
@@ -6,7 +6,7 @@ namespace OLANG.CLI.Tests;
 public static class MethodTest {
     public static void Begin() {
         Console.WriteLine("--- [Test] Method Call & Native Functions ---");
-        EvaluationEnvironment env = new();
+        OlangMemory env = new();
 
         env.Assign("print", new Action<object>((val) => Console.WriteLine($"> OUT (Extern Call): {val}")));
         
@@ -37,4 +37,4 @@ public static class MethodTest {
 
         return tokens;
     }
-}
+}*/

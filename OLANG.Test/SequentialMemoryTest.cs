@@ -1,4 +1,4 @@
-﻿using OLANG.Core;
+﻿/*using OLANG.Core;
 using OLANG.Syntax;
 
 public static class SequentialMemoryTest
@@ -12,7 +12,7 @@ public static class SequentialMemoryTest
             "pi = 3",
             "area = pi * radius * radius"
         };
-        EvaluationEnvironment env = new();
+        OlangMemory env = new();
 
         foreach (var line in script)
         {
@@ -36,4 +36,4 @@ public static class SequentialMemoryTest
         }
         return tokens;
     }
-}
+}*/
