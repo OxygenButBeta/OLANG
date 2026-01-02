@@ -14,7 +14,7 @@ public class OlangRuntime {
         evaluator.Evaluate();
     }
 
-    public bool TryCompile( string sourceCode) {
+    public bool Parse( string sourceCode) {
         tokens = Scan(sourceCode);
         Parser parser = new(tokens.ToArray());
         statements = parser.ParseCompilationUnit();

@@ -21,7 +21,7 @@ internal class Program {
             new Action<object>(Console.WriteLine));
         Seperator();
         Console.WriteLine("Creating AST");
-        runtime.TryCompile(NestedModelTest.Script);
+        runtime.Parse(NestedModelTest.Script);
         Seperator();
         Console.WriteLine("Executing Script");
         Seperator();
